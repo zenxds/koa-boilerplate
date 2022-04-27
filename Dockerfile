@@ -1,4 +1,4 @@
-FROM node:12
+FROM node:12.22.0
 
 ENV APP_DIR /var/www
 

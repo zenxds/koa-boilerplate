@@ -12,6 +12,7 @@ services:
       - redis
     volumes:
       - ./config:/var/www/config
+      - ./log:/var/www/log
       - ./app/public:/var/www/app/public
       - ~/.ssh:/root/.ssh
       - ~/.gitconfig:/root/.gitconfig
@@ -22,7 +23,7 @@ services:
       - "mysql"
 
   mysql:
-    image: mysql:latest
+    image: mysql:5.7
     container_name: koa-mysql
     restart: always
     environment:
