@@ -10,22 +10,22 @@ const transporter = nodemailer.createTransport({
   secure: true, // secure:true for port 465, secure:false for port 587
   auth: {
     user: mailConfig.user,
-    pass: mailConfig.password
-  }
+    pass: mailConfig.password,
+  },
 })
 
 module.exports = {
   /**
    * options: to, appname, error
    */
-  send: (options) => {
+  send: options => {
     const mailOptions = {
       from: mailConfig.from,
       to: options.to,
       subject: options.subject,
       html: substitute(htmlTpl, {
-        detail: options.detail
-      })
+        detail: options.detail,
+      }),
     }
 
     transporter.sendMail(mailOptions, (error, info) => {
@@ -33,7 +33,7 @@ module.exports = {
         console.log(error)
       }
     })
-  }
+  },
 }
 
 function substitute(str, o) {
@@ -41,6 +41,6 @@ function substitute(str, o) {
     if (match.charAt(0) === '\\') {
       return match.slice(1)
     }
-    return (o[name] == null) ? '' : o[name]
+    return o[name] == null ? '' : o[name]
   })
 }

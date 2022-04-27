@@ -5,12 +5,13 @@ module.exports = {
    */
   apps: [
     {
-      name: "koa-app",
-      script: "index.js",
-      // instances : 'max',
-      // exec_mode : 'cluster',
+      name: 'koa-app',
+      script: 'index.js',
+      instances : 'max',
+      exec_mode : 'cluster',
+      instance_var: 'INSTANCE_ID',
       env_production: {
-        NODE_ENV: "production"
+        NODE_ENV: 'production'
       }
     }
   ]

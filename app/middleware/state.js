@@ -4,15 +4,16 @@
  */
 const config = require('config')
 
-module.exports = async function(ctx, next) {
+module.exports = async function (ctx, next) {
   ctx.state = {
     request: ctx.request,
     response: ctx.response,
     csrf: ctx.csrf,
     user: ctx.user,
-    staticVersion: config.staticVersion || "0.1.0",
-    isProduction: ctx.app.isProduction,
-    isMobile: /iPhone|iPad|iPod|Android/i.test(ctx.get('user-agent'))
+    isProduction: ctx.isProduction,
+
+    staticVersion: config.staticVersion || '0.1.0',
+    isMobile: /iPhone|iPad|iPod|Android/i.test(ctx.get('user-agent')),
   }
 
   await next()

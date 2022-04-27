@@ -24,6 +24,7 @@ app/service
 app/view
 app/router
 app/public
+app/util
 ```
 
 ## 部署说明

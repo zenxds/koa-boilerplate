@@ -1,24 +1,26 @@
 const config = require('config')
-const log4js = require('log4js')
 const Koa = require('koa')
-const app = new Koa()
 
-// logger
-log4js.configure(require('../config/log4js'))
-
-// 对app进行扩展
-Object.assign(app, {
-  isProduction: /production/.test(process.env.NODE_ENV),
-
+const getLogger = require('./util/logger')
+const appLogger = getLogger('app')
+const errorLogger = getLogger('error')
+const app = new Koa({
   keys: config.get('keys'),
+})
+const isProduction = /production/.test(app.env)
 
-  logger: log4js.getLogger('app'),
+Object.assign(app, {
+  isProduction,
+})
 
-  errorLogger: log4js.getLogger('error')
+Object.assign(app.context, {
+  isProduction,
+  appLogger,
+  errorLogger,
 })
 
 app.on('error', (err, ctx) => {
-  app.errorLogger.error(`${ctx.path}: ${err.message}`)
+  errorLogger.error(`${ctx.path}: ${err.message}`)
 })
 
 module.exports = app

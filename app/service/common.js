@@ -5,8 +5,8 @@
 /**
  * 渲染模板
  */
-exports.render = (template='', locals={}) => {
-  return async(ctx, next) => {
+exports.render = (template = '', locals = {}) => {
+  return async ctx => {
     await ctx.render(template, locals)
   }
 }
@@ -15,26 +15,32 @@ exports.render = (template='', locals={}) => {
  * 列表渲染
  */
 exports.listView = options => {
-  const {
-    model,
-    modelOptions={},
-    template='',
-    locals={}
-  } = options
+  const { model, modelOptions = {}, template = '', locals = {} } = options
 
-  return async(ctx, next) => {
+  return async ctx => {
     const p = parseInt(ctx.query.p || 1)
     const n = parseInt(ctx.query.n || 10)
 
-    const list = await model.findAndCountAll(Object.assign({
-      offset: (p - 1) * n,
-      limit: n
-    }, modelOptions))
+    const list = await model.findAndCountAll(
+      Object.assign(
+        {
+          offset: (p - 1) * n,
+          limit: n,
+        },
+        modelOptions,
+      ),
+    )
 
     if (template) {
-      await ctx.render(template, Object.assign({
-        list
-      }, locals))
+      await ctx.render(
+        template,
+        Object.assign(
+          {
+            list,
+          },
+          locals,
+        ),
+      )
     } else {
       ctx.body = list
     }
@@ -44,15 +50,10 @@ exports.listView = options => {
 /**
  * 详情渲染
  */
-exports.detailView = (options) => {
-  const {
-    model,
-    modelOptions={},
-    template='',
-    locals={}
-  } = options
+exports.detailView = options => {
+  const { model, modelOptions = {}, template = '', locals = {} } = options
 
-  return async(ctx, next) => {
+  return async ctx => {
     const pk = ctx.query.pk || ctx.query.id
 
     let detail
@@ -62,15 +63,20 @@ exports.detailView = (options) => {
       } else {
         detail = await model.findOne(modelOptions)
       }
-    } catch(err) {
+    } catch (err) {
       return ctx.throw(404)
     }
 
-
     if (template) {
-      await ctx.render(template, Object.assign({
-        detail
-      }, locals))
+      await ctx.render(
+        template,
+        Object.assign(
+          {
+            detail,
+          },
+          locals,
+        ),
+      )
     } else {
       ctx.body = detail
     }

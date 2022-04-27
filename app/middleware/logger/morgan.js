@@ -35,7 +35,7 @@ function morgan(format, options) {
 
   return (ctx, next) => {
     return new Promise((resolve, reject) => {
-      fn(ctx.req, ctx.res, (err) => {
+      fn(ctx.req, ctx.res, err => {
         err ? reject(err) : resolve(ctx)
       })
     }).then(next)

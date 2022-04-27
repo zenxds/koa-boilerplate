@@ -3,8 +3,8 @@
  */
 const minify = require('html-minifier').minify
 
-module.exports = function(options) {
-  return async function(ctx, next) {
+module.exports = function (options) {
+  return async function (ctx, next) {
     await next()
 
     if (!ctx.response.is('html')) {
@@ -22,9 +22,15 @@ module.exports = function(options) {
 
     // 压缩可能出错
     try {
-      ctx.body = minify(body, Object.assign({
-        collapseWhitespace: true
-      }, options))
-    } catch(err) {}
+      ctx.body = minify(
+        body,
+        Object.assign(
+          {
+            collapseWhitespace: true,
+          },
+          options,
+        ),
+      )
+    } catch (err) {}
   }
 }

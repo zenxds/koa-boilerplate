@@ -14,7 +14,8 @@ module.exports = {
     port: "3306",
     database: "",
     username: "",
-    password: ""
+    password: "",
+    logging: console.log
   },
 
   redis: {
