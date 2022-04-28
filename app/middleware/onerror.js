@@ -4,11 +4,14 @@ const isJSON = require('koa-is-json')
  * onerror handler
  */
 module.exports = async function (ctx, next) {
-  // isJSON(ctx.body)
   const isAPI = /\/api\//.test(ctx.path)
 
   try {
     await next()
+
+    if (isJSON(ctx.body) && ctx.body.success !== undefined) {
+      return
+    }
 
     if (isAPI) {
       ctx.body = validateStatus(ctx.status)
