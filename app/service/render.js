@@ -5,7 +5,7 @@
 /**
  * 渲染模板
  */
-exports.render = (template = '', locals = {}) => {
+exports.view = (template = '', locals = {}) => {
   return async ctx => {
     await ctx.render(template, locals)
   }

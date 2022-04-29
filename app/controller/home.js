@@ -1,11 +1,7 @@
-const redis = require('../service/redis')
+const services = require('../service')
 
 exports.index = async ctx => {
-  const key = await redis.incr('key')
-
-  if (ctx.query.error) {
-    ctx.throw(500, 'error')
-  }
+  const key = await services.redis.incr('key')
 
   await ctx.render('index', {
     title: '首页',

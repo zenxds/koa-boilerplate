@@ -36,9 +36,6 @@ app.use(
   ),
 )
 app.use(new CSRF())
-app.use(json())
-// 在json化之前
-app.use(require('./middleware/onerror'))
 app.use(require('./middleware/cors'))
 app.use(
   koaStatic(path.join(__dirname, 'public'), {
@@ -48,6 +45,9 @@ app.use(
 )
 app.use(require('./middleware/render'))
 app.use(require('./middleware/state'))
+app.use(require('./middleware/error'))
+app.use(json())
+app.use(require('./middleware/api')())
 app.use(router.routes())
 app.use(router.allowedMethods())
 
