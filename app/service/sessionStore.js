@@ -21,5 +21,5 @@ class RedisStore {
 }
 
 module.exports = new RedisStore({
-  client: require('./redis'),
+  client: require('./redis').factory(),
 })

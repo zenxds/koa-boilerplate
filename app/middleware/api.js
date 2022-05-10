@@ -3,7 +3,7 @@ const isJSON = require('koa-is-json')
 /**
  * response handler
  */
-module.exports = function (options) {
+module.exports = function (options={}) {
   options = Object.assign({
     match: ctx => /\/api\//.test(ctx.path)
   }, options)

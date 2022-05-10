@@ -1,7 +1,7 @@
 const services = require('../service')
 
 exports.index = async ctx => {
-  const key = await services.redis.incr('key')
+  const key = await services.redis.client.incr('key')
 
   await ctx.render('index', {
     title: '首页',
