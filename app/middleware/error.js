@@ -8,9 +8,9 @@ module.exports = async function (ctx, next) {
     ctx.status = err.status || 500
 
     if (ctx.status === 404) {
-      await ctx.render('404', { message: err.message })
+      ctx.render && await ctx.render('404', { message: err.message })
     } else {
-      await ctx.render('500', { err })
+      ctx.render && await ctx.render('500', { err })
       ctx.app.emit('error', err, ctx)
     }
     return
@@ -18,6 +18,6 @@ module.exports = async function (ctx, next) {
 
   // normal 404
   if (ctx.status === 404) {
-    await ctx.render('404')
+    ctx.render && await ctx.render('404')
   }
 }

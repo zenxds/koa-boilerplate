@@ -20,7 +20,12 @@ Object.assign(app.context, {
 })
 
 app.on('error', (err, ctx) => {
-  errorLogger.error(`${ctx.path}: ${err.message}`)
+  if (isProduction) {
+    errorLogger.error(`${ctx.path}: ${err.message}`)
+  } else {
+    console.log(`${ctx.path}`)
+    console.log(err)
+  }
 })
 
 module.exports = app

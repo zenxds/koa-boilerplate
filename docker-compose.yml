@@ -36,7 +36,7 @@ services:
       - ./config/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf
 
   redis:
-    image: redis:latest
+    image: redis:5.0
     container_name: koa-redis
     restart: always
     volumes:
