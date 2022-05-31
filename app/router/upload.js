@@ -5,7 +5,7 @@ const Router = require('@koa/router')
 const router = new Router()
 
 const multer = require('@koa/multer')
-const uploadDest = path.join(path.dirname(__dirname), 'public')
+const uploadDest = path.join(__dirname, '../public')
 
 // 使用multer上传
 const storage = multer.diskStorage({
