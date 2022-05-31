@@ -1,19 +1,22 @@
 const path = require('path')
-const uuid = require('uuid/v4')
+const fse = require('fs-extra')
+const uuid = require('uuid').v4
 const Router = require('@koa/router')
 const router = new Router()
 
 const multer = require('@koa/multer')
+const uploadDest = path.join(path.dirname(__dirname), 'public')
 
 // 使用multer上传
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dir = path.join(path.dirname(__dirname), 'public')
-    cb(null, dir)
+    cb(null, uploadDest)
   },
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname)
-    cb(null, uuid() + ext)
+    const dir = uuid().split('-')[0]
+
+    fse.ensureDirSync(path.join(uploadDest, dir))
+    cb(null, path.join(dir, file.originalname))
   },
 })
 const upload = multer({
@@ -29,10 +32,7 @@ const upload = multer({
 })
 
 // router.post('/post', upload.single('file'), async(ctx) => {
-//   const {
-//     body,
-//     file
-//   } = ctx.req
+//   ctx.body = ctx.file.filename
 // })
 
 module.exports = router
