@@ -1,15 +1,17 @@
 const path = require('path')
+const fse = require('fs-extra')
 const config = require('config')
 const session = require('koa-session')
 const CSRF = require('koa-csrf')
 const koaStatic = require('koa-static')
 const xmlParser = require('koa-xml-body')
-const bodyParser = require('koa-bodyparser')
 const json = require('koa-json')
 const compress = require('koa-compress')
+const uuid = require('uuid').v4
 
 const app = require('./app')
 const router = require('./router')
+const uploadDest = path.join(__dirname, 'public')
 
 app.use(require('./middleware/logger')(app))
 app.use(compress())
@@ -23,9 +25,22 @@ app.use(
 )
 // 放在csrf之前
 app.use(
-  bodyParser({
+  require('koa-body')({
     formLimit: '10mb',
-  }),
+    multipart: true,
+    formidable: {
+      uploadDir: uploadDest,
+      keepExtensions: true,
+      // 1G
+      maxFileSize: 1024 * 1024 * 1024,
+      filename: (name, ext) => {
+        const dir = uuid().split('-')[0]
+
+        fse.ensureDirSync(path.join(uploadDest, dir))
+        return path.join(dir, name + ext)
+      }
+    }
+  })
 )
 app.use(
   session(
@@ -38,7 +53,7 @@ app.use(
 app.use(new CSRF())
 app.use(require('./middleware/cors'))
 app.use(
-  koaStatic(path.join(__dirname, 'public'), {
+  koaStatic(uploadDest, {
     hidden: true,
     maxage: app.isProduction ? 1000 * 3600 * 24 : 0,
   }),
