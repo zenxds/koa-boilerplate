@@ -13,7 +13,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 
 WORKDIR $APP_DIR
 
-COPY yarn.lock package.json $APP_DIR
+COPY yarn.lock package.json $APP_DIR/
 
 RUN yarn install --production --registry=https://registry.npmmirror.com \
     && yarn cache clean
