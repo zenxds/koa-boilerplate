@@ -6,16 +6,16 @@ ENV TZ Asia/Shanghai
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
-    && mkdir -p $APP_DIR
+    && mkdir -p $APP_DIR \
+    && npm set registry https://registry.npmmirror.com \
+    && npm install -g pm2 \
+    && pm2 install pm2-intercom
 
 WORKDIR $APP_DIR
 
 COPY yarn.lock package.json $APP_DIR
 
 RUN yarn install --production --registry=https://registry.npmmirror.com \
-    && yarn global add pm2 \
-    && npm set registry https://registry.npmmirror.com \
-    && pm2 install pm2-intercom \
     && yarn cache clean
 
 COPY . $APP_DIR
