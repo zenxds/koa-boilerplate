@@ -18,6 +18,7 @@ app.use(compress())
 app.use(require('./middleware/minify')())
 app.use(
   xmlParser({
+    key: 'xmlBody',
     xmlOptions: {
       explicitArray: false,
     },
@@ -26,6 +27,7 @@ app.use(
 // 放在csrf之前
 app.use(
   require('koa-body')({
+    text: false,
     formLimit: '10mb',
     multipart: true,
     formidable: {
