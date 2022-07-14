@@ -7,4 +7,6 @@ const controllers = require('../controller')
 router.get('/', controllers.home.index)
 router.use('/upload', uploadRouter.routes())
 
+router.use('/user', require('./auth').routes())
+
 module.exports = router

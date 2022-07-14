@@ -1,7 +1,11 @@
 const { Sequelize } = require('sequelize')
 const dbConfig = require('config').get('db')
 
-const sequelize = new Sequelize(dbConfig)
+const sequelize = new Sequelize(Object.assign({
+  define: {
+    // freezeTableName: true
+  }
+}, dbConfig))
 
 sequelize
   .authenticate()

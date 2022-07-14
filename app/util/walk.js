@@ -9,7 +9,7 @@ const isOnlyIndex = function(obj) {
 /**
  * 递归把目录下的JS文件转成对象的嵌套
  */
-const walk = function(dir, extensions = /\.(js|json)$/) {
+const walk = function(dir, extensions = /\.(js|json)$/, level = 1) {
   const ret = {}
   if (!fs.existsSync(dir)) {
     return ret
@@ -21,8 +21,12 @@ const walk = function(dir, extensions = /\.(js|json)$/) {
     const p = path.join(dir, file)
     const stat = fs.statSync(p)
 
+    if (level === 1 && file === 'index.js') {
+      continue
+    }
+
     if (stat.isDirectory()) {
-      const children = walk(p)
+      const children = walk(p, extensions, level + 1)
       ret[path.basename(p)] = isOnlyIndex(children) ? children.index : children
       continue
     }

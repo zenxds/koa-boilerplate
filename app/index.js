@@ -65,6 +65,7 @@ app.use(require('./middleware/state'))
 app.use(require('./middleware/error'))
 app.use(json())
 app.use(require('./middleware/api')())
+app.use(require('./middleware/auth')())
 app.use(router.routes())
 app.use(router.allowedMethods())
 

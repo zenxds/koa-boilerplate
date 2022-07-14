@@ -27,5 +27,10 @@ module.exports = {
 
   ignoreOrigin: false,
 
+  adminUser: {
+    username: '',
+    password: ''
+  },
+
   staticVersion: '0.1.0'
 }
