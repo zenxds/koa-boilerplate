@@ -1,4 +1,4 @@
-import { unparam } from './lang/param'
+import { getPublicPath } from './getPublicPath'
 import verifyCaptcha from './verifyCaptcha'
 
 export function isMobileDevice() {
@@ -21,16 +21,10 @@ export function getQueryString(name) {
   return null
 }
 
-export function getWordFromReferer(referer = '') {
-  referer = referer.replace(/&amp;/g, '&')
-
-  const params = unparam(referer.split('?')[1] || '')
-  return params.wd || params.q || params.keyword || params.word || ''
-}
-
 export * from './lang'
 export * from './getPopupContainer'
 
 export {
+  getPublicPath,
   verifyCaptcha
 }

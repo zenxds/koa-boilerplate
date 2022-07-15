@@ -71,3 +71,4 @@ package-lock.json
 
 config/*.js
 !config/default.js
+app/public

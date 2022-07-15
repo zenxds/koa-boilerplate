@@ -32,5 +32,6 @@ module.exports = {
     password: ''
   },
 
+  staticServer: 'http://0.0.0.0:8085',
   staticVersion: '0.1.0'
 }

@@ -19,6 +19,13 @@ module.exports = (sequelize, Model, DataTypes) => {
     validPassword(password) {
       return bcrypt.compareSync(password, this.password)
     }
+
+    toJSON() {
+      const values = Object.assign({}, this.get())
+
+      delete values.password
+      return values
+    }
   }
 
   User.init(
@@ -32,15 +39,24 @@ module.exports = (sequelize, Model, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
+        validate: {
+          is: /^[a-zA-Z]\w{4,20}$/
+        }
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          is: /^[\w-]{4,20}$/
+        }
       },
       email: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: true,
+        validate: {
+          isEmail: true
+        }
       },
       isSuperuser: {
         type: DataTypes.BOOLEAN,
@@ -53,7 +69,7 @@ module.exports = (sequelize, Model, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'user',
+      modelName: 'user'
     },
   )
 

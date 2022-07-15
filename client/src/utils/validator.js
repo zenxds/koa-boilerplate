@@ -11,5 +11,9 @@ export function isSMSCode(s) {
 }
 
 export function isPassword(s) {
-  return /^[\w-]{6,20}$/.test(s)
+  return /^[\w-]{4,20}$/.test(s)
+}
+
+export function isUsername(s) {
+  return /^[a-zA-Z]\w{4,20}$/.test(s)
 }

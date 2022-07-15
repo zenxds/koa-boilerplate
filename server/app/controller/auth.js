@@ -1,8 +1,14 @@
-const services = require('../service')
 const models = require('../model')
+const { errorCodeMap } = require('../constant')
 
-exports.renderLogin = async ctx => {
-  await ctx.render('login')
+const { User } = models
+
+exports.render = title => {
+  return async ctx => {
+    await ctx.render('index', {
+      title
+    })
+  }
 }
 
 exports.login = async ctx => {
@@ -10,31 +16,52 @@ exports.login = async ctx => {
   const { username, password } = body
 
   if (!username || !password) {
-    return ctx.throw(403)
+    throw new Error(`${errorCodeMap.emptyValue}: 用户名或密码不能为空`)
   }
 
-  const user = await models.User.findOne({
+  const user = await User.findOne({
     where: {
       username
     }
   })
 
   if (!user) {
-    await ctx.render('login', {
-      error: '用户不存在'
-    })
-    return
+    throw new Error(`${errorCodeMap.userNotExist}: 用户不存在`)
   }
 
-  const backUrl = ctx.query.backUrl || '/'
-  if (user.validPassword(password)) {
-    ctx.session.user = user
-    ctx.redirect(backUrl)
-  } else {
-    await ctx.render('login', {
-      error: '密码不正确'
-    })
+  if (!user.validPassword(password)) {
+    throw new Error(`${errorCodeMap.passwordIncorrect}: 密码不正确`)
   }
+
+  ctx.session.user = user
+  ctx.body = user
+}
+
+exports.register = async ctx => {
+  const { body } = ctx.request
+  const { username, password } = body
+
+  if (!username || !password) {
+    throw new Error(`${errorCodeMap.emptyValue}: 用户名或密码不能为空`)
+  }
+
+  let user = await User.findOne({
+    where: {
+      username
+    }
+  })
+
+  if (user) {
+    throw new Error(`${errorCodeMap.userExist}: 该用户名已被注册`)
+  }
+
+  user = await User.create({
+    username,
+    password
+  })
+
+  ctx.session.user = user
+  ctx.body = user
 }
 
 exports.logout = async ctx => {

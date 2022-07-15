@@ -140,11 +140,13 @@ module.exports = {
       }
     ],
     client: {
+      webSocketURL: 'ws://0.0.0.0:8085/ws',
       overlay: {
         errors: true,
         warnings: false,
       },
     },
+    port: 8085,
     hot: true,
     historyApiFallback: true,
     host: '0.0.0.0',
@@ -155,6 +157,9 @@ module.exports = {
       }
 
       dxMock(devServer.app, { root: path.join(__dirname, '../api')})
+    },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
     },
     proxy: {
       '/dev': {

@@ -12,18 +12,13 @@ import {
 import loadable from '@loadable/component'
 import { Spin } from '@dx/xbee'
 
-import Sidebar from '../components/Sidebar'
+import paths from '@constants/paths'
 
-const paths = {
-  '/': 'login',
-  '/user/login': 'login',
-  '/user/register': 'login',
-  '/user/bind': 'register',
-  '/user/forgetPwd': 'forgetPassword',
-  '/user/resetPassword': 'resetPassword',
-  '/user/confirmReset': 'resetPassword',
+const containerMap = {
+  [paths.login]: 'login',
+  [paths.register]: 'register'
 }
-const container = paths[location.pathname] || paths['/']
+const container = containerMap[location.pathname] || 'login'
 
 function load(page) {
   return loadable(() => import(`./${page}`), {
@@ -49,22 +44,11 @@ export default class Main extends Component {
   render() {
     return (
       <div className="app-root">
-        <div className="app-sidebar">
-          <Sidebar />
-        </div>
         <div className="app-content">
           <Switch>
             <Route path="/" exact component={load(container)} />
             <Route path="/" component={load(container)} />
           </Switch>
-        </div>
-
-        <div className="logo">
-          <a href="https://www.dingxiang-inc.com/" title="顶象">顶象</a>
-        </div>
-
-        <div className="copyright">
-          Copyright © { this.state.year } 北京顶象技术有限公司 版权所有 京ICP备17034357号
         </div>
       </div>
     )

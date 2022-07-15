@@ -1,0 +1,4 @@
+{
+  "ignore": ["log"],
+  "ext": "js,json,html"
+}

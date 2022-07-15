@@ -2,10 +2,6 @@
  * 语言相关函数
  */
 
-export const startsWith = (str, prefix) => {
-  return str.lastIndexOf(prefix, 0) === 0
-}
-
 /**
  * array to map by a key attribute
  */
@@ -48,6 +44,16 @@ export function compact(object, exclude = [0]) {
     }
 
     ret[key] = value
+  })
+
+  return ret
+}
+
+export function reverseObject(object) {
+  const ret = {}
+
+  Object.keys(object).forEach((key) => {
+    ret[object[key]] = key
   })
 
   return ret

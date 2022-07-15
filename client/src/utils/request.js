@@ -4,39 +4,17 @@ import axios from 'axios'
 import { API_SERVER } from '@constants'
 import { param, isPlainObject, compact } from './lang'
 
-axios.defaults.baseURL = API_SERVER
-axios.defaults.headers.post['Content-Type'] =
-  'application/x-www-form-urlencoded'
+const instance = axios.create({
+  baseURL: API_SERVER
+})
+
+instance.defaults.headers.common['csrf-token'] = window.csrf || ''
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 const messageMap = {
   'request error': '请求失败，请稍后重试',
   'Network Error': '网络出错，请检查您的网络状况',
   'Request failed with status code 502': '服务器出小差了，请稍后重试',
-}
-
-// 注释的以message提示，非注释的confirm提示
-const errorCodeMap = {
-  '-1001': '操作失败，请重试',
-  '-1002': '密码错误次数过多，账户已被锁定，请明天再试！',
-  '-1003': '多次密码错误可能导致账户被锁定！如忘记密码可以试试找回密码',
-  // '-1004': '账号或密码不正确',
-  // '-1005': '该手机号尚未注册',
-  // '-1006': '手机号码已注册',
-  // '-1007': '验证码已失效，请重新获取',
-  // '-1008': '请输入正确验证码',
-  '-1009': '重试次数太多，请稍后再试',
-  '-1010': '短信验证码已被使用',
-  '-1011': '发送失败，短信类型不正确',
-  '-1012': '当日发送短信次数已达上限',
-  '-1013': '短信发送失败',
-  '-1014': '短信发送间隔时间过短，请稍后再试',
-  '-1015': '发送失败，页面停留时间过长',
-  '-1016': '注册失败，请重新注册',
-  '-1017': '抱歉，因为一个未知错误，导致邮件发送失败，请稍后再试',
-  '-1018': '重置链接已失效，请重新获取',
-  '-1019': '重置密码失败，请重试！',
-  // '-1020': '用户不存在',
-  // '-1021': '手机号码不能为空'
 }
 
 export default function request(config = {}) {
@@ -52,23 +30,24 @@ export default function request(config = {}) {
     config,
   )
 
-  const ret = axios(config).then(response => {
+  const ret = instance(config).then(response => {
     const { success, data, message } = response.data
 
     if (success) {
       // 后端有的success没有返回data，默认给个true
       return config.returnResponseData ? response.data : (data === undefined ? true : data)
     } else {
-      throw new Error((errorCodeMap[data] ? data : message) || '请求失败')
+      throw new Error(message || '请求失败')
     }
   })
 
   if (config.catchError) {
     return ret.catch(err => {
-      if (errorCodeMap[err.message]) {
+      // 以-开头的错误，如-1001
+      if (err.message.charAt(0) === '-') {
         return new Promise(resolve => {
-          Modal.confirm({
-            title: errorCodeMap[err.message],
+          Modal.error({
+            title: err.message,
             onOk() {
               resolve()
             },

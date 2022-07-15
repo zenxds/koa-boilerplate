@@ -1,5 +1,19 @@
 {% extends "layout/base.html" %}
 
+{% block styles %}
+{% if isProduction %}
+<link rel="stylesheet" href="{{ staticServer }}/main.css?v={{ staticVersion }}">
+{% endif %}
+{% endblock %}
+
 {% block content %}
-<p>Hello world {{ key }}!</p>
+<div id="app"></div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+  window.csrf = "{{ csrf }}";
+</script>
+<script src="{{ staticServer }}/main.js?v={{ staticVersion }}"></script>
 {% endblock %}

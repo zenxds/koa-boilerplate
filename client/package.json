@@ -1,13 +1,14 @@
 {
-  "name": "user-center-ui-react",
+  "name": "ui-react",
   "version": "0.1.0",
-  "description": "user-center-ui-react",
+  "description": "ui-react",
   "main": "build/main.js",
   "scripts": {
     "start": "cross-env BABEL_ENV=development webpack server --hot --open --env env=development",
     "vendor": "webpack --progress --env env=dll && mv build/vendor.js data/ && mv tmp/manifest.json data/",
     "_build": "cross-env BABEL_ENV=production webpack --progress --env env=production",
     "build": "npm run vendor && npm run _build",
+    "deploy": "scp -r build/* ../server/app/public",
     "prettier": "prettier --write 'src/**/*.js' 'src/**/*.jsx'",
     "test": "jest ."
   },
@@ -120,11 +121,9 @@
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
-    "dx-dms-sdk": "^0.3.0",
     "mobx": "5",
     "mobx-react": "5",
     "prop-types": "^15.8.1",
-    "qrcode": "^1.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "5"

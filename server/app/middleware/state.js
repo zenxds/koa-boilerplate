@@ -13,6 +13,7 @@ module.exports = async function (ctx, next) {
     isProduction: ctx.isProduction,
 
     staticVersion: config.staticVersion || '0.1.0',
+    staticServer: config.staticServer,
     isMobile: /iPhone|iPad|iPod|Android/i.test(ctx.get('user-agent')),
   }
 
