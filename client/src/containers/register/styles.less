@@ -1,0 +1,140 @@
+@import '~@dx/xbee/color.less';
+@import '~less/variables.less';
+@import '~less/fn.less';
+
+@import '../common.less';
+
+.register-title {
+  .form-title();
+  margin-bottom: 30px;
+}
+
+.register-title-password {
+  .form-title();
+  margin-bottom: 12px;
+}
+
+.agree {
+  margin: 6px 0 2px;
+  font-size: 14px;
+  line-height: 20px;
+  color: fade(@color-D500, 75);
+
+  a {
+    color: @color-blue;
+  }
+}
+
+.agreement {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1100;
+  background: #fff;
+  height: 100%;
+  padding: 160px 82px;
+  color: @color-D500;
+
+  h2 {
+    position: absolute;
+    left: 82px;
+    top: 80px;
+    color: @color-D500;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 50px;
+  }
+
+  .agreement-close {
+    position: absolute;
+    left: 82px;
+    bottom: 84px;
+    width: 342px;
+    font-size: 16px;
+    height: 50px;
+    line-height: 44px;
+    border-radius: 4px;
+  }
+
+  .agreement-content {
+    font-size: 14px;
+    line-height: 28px;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  :global {
+    .s1 {
+      margin-top: 0;
+
+      label {
+        font-weight: 600;
+      }
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+
+      &.s2 {
+        opacity: .8;
+
+        label {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+
+.password-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  color: fade(@color-D500, 75);
+  margin-bottom: 30px;
+
+  .current {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .toggle {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 20px;
+
+    em {
+      font-style: normal;
+      font-weight: 600;
+      color: @color-blue;
+    }
+  }
+}
+
+.password-form {
+  :global {
+    .xbee-input-affix-wrapper > input.xbee-input {
+      padding: 0 16px;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .agreement {
+    padding: 80px 20px;
+
+    h2 {
+      left: 20px;
+      top: 20px;
+    }
+
+    .agreement-close {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      width: 300px;
+    }
+  }
+}

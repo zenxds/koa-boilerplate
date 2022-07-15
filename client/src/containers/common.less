@@ -1,0 +1,137 @@
+@import '~@dx/xbee/color.less';
+@import '~less/variables.less';
+@import '~less/fn.less';
+
+.form {
+  .fn-center();
+  top: 42%;
+  z-index: 800;
+  width: 340px;
+
+  :global {
+    .xbee-form-item {
+      margin-bottom: 18px;
+    }
+
+    .xbee-form-item-with-help {
+      margin-bottom: 0;
+    }
+
+    .xbee-form-item-with-help .xbee-form-item-explain {
+      min-height: 18px;
+      margin-top: 4px;
+    }
+
+    .xbee-input {
+      font-size: 16px;
+      line-height: 48px;
+      border: 1px solid fade(@color-D500, 20);
+      color: fade(@color-D500, 75);
+
+      &::placeholder {
+        color: fade(@color-D500, 65);
+      }
+    }
+
+    .xbee-input-prefix {
+      position: relative;
+      width: 60px;
+      justify-content: center;
+      margin-right: 5px;
+      font-size: 16px;
+      color: fade(@color-D500, 75);
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 22px;
+        background: fade(@color-D500, 10);
+      }
+    }
+
+    .xbee-input-suffix {
+      padding-right: 16px;
+    }
+
+    .xbee-input-affix-wrapper {
+      border-radius: 4px;
+      padding: 2px 0;
+    }
+
+    .xbee-input-affix-wrapper > input.xbee-input {
+      padding: 0 10px;
+    }
+
+    .anticon {
+      font-size: 20px;
+    }
+
+    .xbee-btn-primary[disabled],
+    .xbee-btn-primary[disabled]:hover,
+    .xbee-btn-primary[disabled]:focus,
+    .xbee-btn-primary[disabled]:active {
+      background: fade(@color-D500, 40);
+      border-color: transparent;
+      color: #fff;
+    }
+  }
+}
+
+.submit {
+  margin-top: 6px;
+  width: 100%;
+  font-size: 16px;
+  height: 50px;
+  line-height: 44px;
+  border-radius: 4px;
+}
+
+.form-title {
+  position: relative;
+  font-size: 36px;
+  line-height: 50px;
+  font-weight: 600;
+  color: @color-D500;
+}
+
+.back {
+  position: absolute;
+  left: -47px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAyCAYAAABPq7vSAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFaSURBVHgBvdjNTcQwEAXgZ6PcKcElUAJ0sC3QAUduXBEnStkONiW4hJTAEQkpQ2wWBGwS/73xnJIo0idNfvw8QOcyUKqb24drYDhYiJthvR9fjmrggjlrhtNy6H5dnmb5uKODG1gsAUYquIed682iHxaLAuZiS0+PzS3NxQRmErFtL00p5sfnqRqswcJ5FViLVYEtWDHYihWBDCwbZGFZIBNLgmxsF9TANkEtbBXUxC5AbewP2AP7AXthEeyJhbLWDk+9sAhC5IBO2BeYKBPCHd7BKitifOKe+IzDswYFxNV9aBs6oefP4tEZM5+W9rnE/TGu+/F1QgvYE/33a9NHV37euujG8qSH7izAOmgiYvDRjBDFRTNjIg8tCMIctDDqt6MVm5k2tHK7Vo82bEjr0MYtdzlKGCqUoZTBUC5KnURlorxJVEh1Id2l4goNzEIZk6i1Wmvvd779BEIAm7LLUozEAAAAAElFTkSuQmCC) no-repeat center center;
+  background-size: 14px 24.5px;
+}
+
+.more {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  color: fade(@color-D500, 75);
+
+  a {
+    color: fade(@color-D500, 75);
+  }
+
+  .link {
+    color: @color-blue;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .form {
+    top: 140px;
+    transform: translateX(-50%);
+  }
+
+  .back {
+    left: 0;
+  }
+}

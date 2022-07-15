@@ -1,0 +1,47 @@
+version: '2'
+services:
+  web:
+    image: koa/app:latest
+    container_name: koa-app
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql
+      - redis
+    volumes:
+      - ./config:/var/www/config
+      - ./log:/var/www/log
+      - ./app/public:/var/www/app/public
+      - ~/.ssh:/root/.ssh
+      - ~/.gitconfig:/root/.gitconfig
+    ports:
+      - "7002:7002"
+    links:
+      - "redis"
+      - "mysql"
+
+  mysql:
+    image: mysql:5.7
+    container_name: koa-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_root
+      MYSQL_DATABASE: koa_app
+      MYSQL_USER: mysql_user
+      MYSQL_PASSWORD: mysql_pwd
+    volumes:
+      - mysql-volume:/var/lib/mysql
+      - ./config/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf
+
+  redis:
+    image: redis:5.0
+    container_name: koa-redis
+    restart: always
+    volumes:
+      - redis-volume:/data
+
+volumes:
+  mysql-volume:
+  redis-volume:

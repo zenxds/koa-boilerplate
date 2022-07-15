@@ -1,0 +1,46 @@
+@import '~@dx/xbee/color.less';
+@import '~less/variables.less';
+@import '~less/fn.less';
+
+@import '../common.less';
+
+.forget-title {
+  .form-title();
+  margin-bottom: 30px;
+}
+
+.forget-success {
+  padding-top: 123px;
+  background: url('./images/success.svg') no-repeat center top;
+  text-align: center;
+
+  p {
+    margin-top: 12px;
+    margin-bottom: 44px;
+
+    font-size: 14px;
+    line-height: 24px;
+    color: fade(@color-D500, 75);
+  }
+
+  em {
+    font-style: normal;
+    color: @color-D500;
+  }
+
+  :global {
+    .xbee-btn-primary {
+      width: 100%;
+      font-size: 16px;
+      height: 50px;
+      line-height: 44px;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .forget-title {
+    padding-left: 50px;
+  }
+}
