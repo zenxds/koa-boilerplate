@@ -4,4 +4,6 @@ exports.errorCodeMap = {
   'userExist': '-1002',
 
   'passwordIncorrect': '-1010',
+
+  'registerClose': '-1020',
 }

@@ -1,3 +1,5 @@
+const config = require('config')
+
 const models = require('../model')
 const { errorCodeMap } = require('../constant')
 
@@ -40,6 +42,10 @@ exports.login = async ctx => {
 exports.register = async ctx => {
   const { body } = ctx.request
   const { username, password } = body
+
+  if (!config.openRegister) {
+    throw new Error(`${errorCodeMap.registerClose}: 注册未开放`)
+  }
 
   if (!username || !password) {
     throw new Error(`${errorCodeMap.emptyValue}: 用户名或密码不能为空`)

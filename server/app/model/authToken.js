@@ -10,7 +10,7 @@ module.exports = (sequelize, Model, DataTypes) => {
     }
 
     static generate() {
-      return crypto.randomBytes(16).toString('hex')
+      return crypto.randomBytes(30).toString('hex')
     }
   }
 
