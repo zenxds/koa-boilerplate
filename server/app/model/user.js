@@ -1,6 +1,7 @@
+const { Model, DataTypes } = require('sequelize')
 const bcrypt = require('bcrypt')
 
-module.exports = (sequelize, Model, DataTypes) => {
+module.exports = (sequelize) => {
   class User extends Model {
     static associate({ AuthToken, Role }) {
       User.hasMany(AuthToken, {
@@ -19,6 +20,12 @@ module.exports = (sequelize, Model, DataTypes) => {
 
     validPassword(password) {
       return bcrypt.compareSync(password, this.password)
+    }
+
+    async hasRole(name) {
+      const roles = await this.getRoles()
+
+      return roles.some(role => role.name === name)
     }
 
     toJSON() {
@@ -48,7 +55,7 @@ module.exports = (sequelize, Model, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          is: /^[\w-]{4,20}$/
+          // is: /^[\w-]{4,20}$/
         }
       },
       email: {
@@ -59,7 +66,7 @@ module.exports = (sequelize, Model, DataTypes) => {
           isEmail: true
         }
       },
-      isSuperuser: {
+      isSuperAdmin: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
@@ -70,13 +77,19 @@ module.exports = (sequelize, Model, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'user'
+      modelName: 'User',
+      tableName: 'user',
+      setterMethods: {
+        password(value) {
+          if (/^[\w-]{4,20}$/.test(value)) {
+            this.setDataValue('password', this.generateHash(value))
+          } else {
+            throw new Error('incorrect password format')
+          }
+        }
+      }
     },
   )
-
-  User.addHook('beforeCreate', function(user) {
-    user.password = user.generateHash(user.password)
-  })
 
   return User
 }

@@ -1,4 +1,3 @@
-const { DataTypes, Model } = require('sequelize')
 const { each, camelCase } = require('../util')
 const walk = require('../util/walk')
 const sequelize = require('../service/sequelize')
@@ -7,7 +6,7 @@ const models = {}
 const files = walk(__dirname)
 
 each(files, (file, key) => {
-  models[camelCase(key, true)] = file(sequelize, Model, DataTypes)
+  models[camelCase(key, true)] = file(sequelize)
 })
 
 each(models, model => {

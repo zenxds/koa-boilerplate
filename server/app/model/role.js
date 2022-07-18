@@ -1,4 +1,6 @@
-module.exports = (sequelize, Model, DataTypes) => {
+const { Model, DataTypes } = require('sequelize')
+
+module.exports = (sequelize) => {
   class Role extends Model {
     static associate({ User }) {
       Role.belongsToMany(User, {
@@ -22,7 +24,8 @@ module.exports = (sequelize, Model, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'role'
+      modelName: 'Role',
+      tableName: 'role',
     },
   )
 
