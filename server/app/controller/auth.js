@@ -13,6 +13,16 @@ exports.render = title => {
   }
 }
 
+exports.renderRegister = async ctx => {
+  if (!config.openRegister) {
+    throw new Error(`${errorCodeMap.registerClose}: 注册未开放`)
+  }
+
+  await ctx.render('index', {
+    title: '注册'
+  })
+}
+
 exports.login = async ctx => {
   const { body } = ctx.request
   const { username, password } = body
