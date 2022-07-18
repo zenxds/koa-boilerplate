@@ -162,11 +162,11 @@ module.exports = {
       filename: '[name].css'
     }),
     new CaseSensitivePathsWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: 'template/index.prod.html',
-      hash: true,
-      random: Math.random().toString().slice(2)
-    })
+    // new HtmlWebpackPlugin({
+    //   template: 'template/index.prod.html',
+    //   hash: true,
+    //   random: Math.random().toString().slice(2)
+    // })
   ]
 }
 

@@ -1,13 +1,14 @@
-// http://docs.sequelizejs.com/manual/tutorial/models-definition.html
-// STRING TEXT INTEGER DATE DATEONLY BOOLEAN
-// type, allowNull, defaultValue, unique, autoIncrement, primaryKey
 const bcrypt = require('bcrypt')
 
 module.exports = (sequelize, Model, DataTypes) => {
   class User extends Model {
-    static associate({ AuthToken }) {
+    static associate({ AuthToken, Role }) {
       User.hasMany(AuthToken, {
         as: 'tokens'
+      })
+
+      User.belongsToMany(Role, {
+        through: 'user_role'
       })
     }
 

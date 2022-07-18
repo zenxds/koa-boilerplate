@@ -1,4 +1,3 @@
-const config = require('config')
 const { DataTypes, Model } = require('sequelize')
 const { each, camelCase } = require('../util')
 const walk = require('../util/walk')
@@ -25,24 +24,6 @@ User.addHook('afterCreate', 'generateAuthToken', (user) => {
   })
 })
 
-const adminUser = config.get('adminUser')
-
-async function init() {
-  await sequelize.sync()
-
-  if (adminUser.username) {
-    User.findOrCreate({
-      where: {
-        username: adminUser.username,
-        isSuperuser: true
-      },
-      defaults: {
-        password: adminUser.password,
-      }
-    })
-  }
-}
-
-init()
+sequelize.sync()
 
 module.exports = models

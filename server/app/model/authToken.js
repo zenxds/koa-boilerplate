@@ -1,6 +1,3 @@
-// http://docs.sequelizejs.com/manual/tutorial/models-definition.html
-// STRING TEXT INTEGER DATE DATEONLY BOOLEAN
-// type, allowNull, defaultValue, unique, autoIncrement, primaryKey
 const crypto = require('crypto')
 
 module.exports = (sequelize, Model, DataTypes) => {
