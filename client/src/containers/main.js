@@ -10,15 +10,11 @@ import {
   withRouter,
 } from 'react-router-dom'
 import loadable from '@loadable/component'
-import { Spin } from '@dx/xbee'
+import { Spin, Result } from '@dx/xbee'
 
 import paths from '@constants/paths'
-
-const containerMap = {
-  [paths.login]: 'login',
-  [paths.register]: 'register'
-}
-const container = containerMap[location.pathname] || 'login'
+import Header from '@components/Header'
+import Menu from '@components/Menu'
 
 function load(page) {
   return loadable(() => import(`./${page}`), {
@@ -36,19 +32,27 @@ export default class Main extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      year: new Date().getFullYear(),
-    }
+    this.state = {}
   }
 
   render() {
     return (
       <div className="app-root">
-        <div className="app-content">
-          <Switch>
-            <Route path="/" exact component={load(container)} />
-            <Route path="/" component={load(container)} />
-          </Switch>
+        <div className="app-menu">
+          <Menu />
+        </div>
+        <div className="app-wrapper">
+          <div className="app-header">
+            <Header />
+          </div>
+          <div className="app-content">
+            <Switch>
+              <Route exact path={paths.index} component={load('dashboard')} />
+              <Route path="/">
+                <Result status="404" />
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
     )

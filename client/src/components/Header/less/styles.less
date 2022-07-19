@@ -1,0 +1,36 @@
+@import '~@dx/xbee/color.less';
+@import '~less/variables.less';
+@import '~less/fn.less';
+
+.header-info {
+  flex: 1;
+  text-align: right;
+  line-height: @header-height;
+
+  a {
+    display: inline-block;
+    vertical-align: top;
+    color: @black65;
+    padding: 0 8px;
+  }
+
+  a:hover {
+    color: @main_color;
+    background: @main_bg_color;
+  }
+}
+
+.user-info {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  height: @header-height;
+  cursor: pointer;
+  padding: 0 12px;
+
+  .user-name {
+    display: inline-block;
+    max-width: 160px;
+    .fn-text-overflow();
+  }
+}

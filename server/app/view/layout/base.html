@@ -13,6 +13,9 @@
   <meta name="renderer" content="webkit">
   {% block styles %}
   {% endblock %}
+  <script>
+    window.user = '{{ user | dump | safe }}';
+  </script>
 </head>
 <body>
 

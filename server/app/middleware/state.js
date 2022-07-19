@@ -9,7 +9,7 @@ module.exports = async function (ctx, next) {
     request: ctx.request,
     response: ctx.response,
     csrf: ctx.csrf,
-    user: ctx.user,
+    user: ctx.session.user,
     isProduction: ctx.isProduction,
 
     staticVersion: config.staticVersion || '0.1.0',
