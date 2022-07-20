@@ -12,8 +12,5 @@
 
 
 {% block scripts %}
-<script>
-  window.csrf = "{{ csrf }}";
-</script>
 <script src="{{ staticServer }}/main.js?v={{ staticVersion }}"></script>
 {% endblock %}

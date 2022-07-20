@@ -19,7 +19,7 @@ import './less/app.less'
 
 const containerMap = {
   [paths.login]: 'login',
-  [paths.register]: 'register'
+  [paths.register]: 'register',
 }
 const container = containerMap[location.pathname]
 
@@ -44,18 +44,16 @@ class App extends Component {
         <Switch>
           <Route path={paths.login} component={load('login')} />
           <Route path={paths.register} component={load('register')} />
-          {
-            container ? (
-              <Route path="/" component={load(container)} />
-            ) : (
-              <Route
+          {container ? (
+            <Route path="/" component={load(container)} />
+          ) : (
+            <Route
               path="/"
               render={props =>
                 isLogin ? <Main {...props} /> : <Redirect to={paths.login} />
               }
             />
-            )
-          }
+          )}
         </Switch>
       </Router>
     )

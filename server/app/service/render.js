@@ -59,7 +59,7 @@ exports.detailView = options => {
     let detail
     try {
       if (pk) {
-        detail = await model.findById(pk)
+        detail = await model.findByPk(pk)
       } else {
         detail = await model.findOne(modelOptions)
       }

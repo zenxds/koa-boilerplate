@@ -17,7 +17,7 @@ export default class PageTable extends Base {
 
     this.state = {
       items: [],
-      pageNo: 1,
+      page: 1,
       pageSize: 10,
       itemCount: 0,
 
@@ -30,7 +30,7 @@ export default class PageTable extends Base {
 
     query = Object.assign(
       toJS(store.pageConditions),
-      pick(['pageNo', 'pageSize'], this.state),
+      pick(['page', 'pageSize'], this.state),
       query,
     )
 
@@ -82,14 +82,14 @@ export default class PageTable extends Base {
   }
 
   getColumns() {
-    const { pageNo, pageSize } = this.state
+    const { page, pageSize } = this.state
 
     return [
       {
         title: '序号',
         dataIndex: 'userId',
         render: (text, record, index) => {
-          return (pageNo - 1) * pageSize + index + 1
+          return (page - 1) * pageSize + index + 1
         },
       },
       {

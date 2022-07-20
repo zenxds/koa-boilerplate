@@ -15,6 +15,7 @@
   {% endblock %}
   <script>
     window.user = '{{ user | dump | safe }}';
+    window.csrf = "{{ csrf }}";
   </script>
 </head>
 <body>

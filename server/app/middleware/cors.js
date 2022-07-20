@@ -11,7 +11,7 @@ module.exports = require('@koa/cors')({
       return requestOrigin
     }
 
-    if (/dingxiang-inc\.com/.test(requestOrigin)) {
+    if (/a\.com/.test(requestOrigin)) {
       return requestOrigin
     }
   },
