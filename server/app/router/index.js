@@ -8,6 +8,6 @@ router.get('/', controllers.home.index)
 router.use('/upload', uploadRouter.routes())
 
 router.use('/user', require('./auth').routes())
-router.use('/:model', require('./common').routes())
+router.use('/api/:model', require('./common').routes())
 
 module.exports = router
