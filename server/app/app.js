@@ -8,13 +8,16 @@ const app = new Koa({
   keys: config.get('keys'),
 })
 const isProduction = /production/.test(app.env)
+const isMaster = isProduction ? process.env.INSTANCE_ID === '0' : true
 
 Object.assign(app, {
   isProduction,
+  isMaster
 })
 
 Object.assign(app.context, {
   isProduction,
+  isMaster,
   appLogger,
   errorLogger,
 })
