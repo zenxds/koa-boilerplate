@@ -11,9 +11,9 @@ services:
       - mysql
       - redis
     volumes:
-      - ./config:/var/www/config
-      - ./log:/var/www/log
-      - ./app/public:/var/www/app/public
+      - ./config:/home/node/config
+      - ./log:/home/node/log
+      - ./app/public:/home/node/app/public
       - ~/.ssh:/root/.ssh
       - ~/.gitconfig:/root/.gitconfig
     ports:
