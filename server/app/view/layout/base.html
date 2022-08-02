@@ -14,7 +14,7 @@
   {% block styles %}
   {% endblock %}
   <script>
-    window.user = '{{ user | dump | safe }}';
+    window.user = '{% if user %}{{ user | dump | safe }}{% endif %}';
     window.csrf = "{{ csrf }}";
   </script>
 </head>

@@ -12,5 +12,8 @@
 
 
 {% block scripts %}
+{% if isProduction %}
+<script src="{{ staticServer }}/vendor.js?v={{ staticVersion }}"></script>
+{% endif %}
 <script src="{{ staticServer }}/main.js?v={{ staticVersion }}"></script>
 {% endblock %}

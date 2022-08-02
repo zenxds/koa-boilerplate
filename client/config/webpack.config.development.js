@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UnusedWebpackPlugin = require('unused-webpack-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 
 const rules = require('./webpack.rules')
 module.exports = {
@@ -121,6 +122,7 @@ module.exports = {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       failOnError: true,
     }),
+    new AntdDayjsWebpackPlugin(),
     new ReactRefreshWebpackPlugin(),
     new CaseSensitivePathsWebpackPlugin(),
     new webpack.ProvidePlugin({

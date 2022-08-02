@@ -3,11 +3,12 @@ const path = require('path')
 const dayjs = require('dayjs')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const TerserPlugin = require("terser-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const CaseSensitivePathsWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
+const AntdDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 
 const rules = require('./webpack.rules')
 module.exports = {
@@ -19,8 +20,8 @@ module.exports = {
     filename: 'main.js',
     chunkFilename: '[name].[hash].js',
     clean: {
-      keep: /vendor/
-    }
+      keep: /vendor/,
+    },
   },
   optimization: {
     // chunkIds: 'named',
@@ -32,9 +33,9 @@ module.exports = {
         extractComments: false,
         terserOptions: {
           compress: {
-            drop_console: true
-          }
-        }
+            drop_console: true,
+          },
+        },
       }),
       new CssMinimizerPlugin(),
     ],
@@ -47,14 +48,14 @@ module.exports = {
       '@utils': resolve('utils'),
       '@components': resolve('components'),
       '@decorators': resolve('decorators'),
-    }
+    },
   },
   module: {
     rules: rules.concat([
       {
         test: /\.jsx?$/,
         use: ['babel-loader'],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -64,19 +65,19 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[hash:base64]'
+                localIdentName: '[hash:base64]',
               },
-            }
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                config: path.join(__dirname, 'postcss.config.js')
-              }
-            }
-          }
-        ]
+                config: path.join(__dirname, 'postcss.config.js'),
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.less$/,
@@ -87,27 +88,29 @@ module.exports = {
             loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: '[hash:base64]'
+                localIdentName: '[hash:base64]',
               },
-            }
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                config: path.join(__dirname, 'postcss.config.js')
-              }
-            }
+                config: path.join(__dirname, 'postcss.config.js'),
+              },
+            },
           },
           {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                relativeUrls: false
-              }
-            }
-          }
-        ]
+                relativeUrls: false,
+                math: 'always',
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
       {
         test: /(theme|xbee|xpanda)\.less$/,
@@ -120,38 +123,38 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               postcssOptions: {
-                config: path.join(__dirname, 'postcss.config.js')
-              }
-            }
+                config: path.join(__dirname, 'postcss.config.js'),
+              },
+            },
           },
           {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
-          }
-        ]
+                javascriptEnabled: true,
+              },
+            },
+          },
+        ],
       },
-    ])
+    ]),
   },
   plugins: [
     new webpack.DllReferencePlugin({
-      manifest: require('../data/manifest.json')
+      manifest: require('../data/manifest.json'),
     }),
     new webpack.DefinePlugin({
-      API_SERVER_PLACEHOLDER: JSON.stringify('')
+      API_SERVER_PLACEHOLDER: JSON.stringify(''),
     }),
     new webpack.ProvidePlugin({
-      'React': 'react'
+      React: 'react',
     }),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.join(__dirname, '../data')
-        }
-      ]
+          from: path.join(__dirname, '../data'),
+        },
+      ],
     }),
     new webpack.optimize.MinChunkSizePlugin({
       // Minimum number of characters
@@ -159,15 +162,16 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       chunkFilename: '[name].[hash].css',
-      filename: '[name].css'
+      filename: '[name].css',
     }),
     new CaseSensitivePathsWebpackPlugin(),
+    new AntdDayjsWebpackPlugin(),
     // new HtmlWebpackPlugin({
     //   template: 'template/index.prod.html',
     //   hash: true,
     //   random: Math.random().toString().slice(2)
     // })
-  ]
+  ],
 }
 
 function resolve(p) {
