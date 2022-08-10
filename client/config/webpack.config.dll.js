@@ -1,7 +1,7 @@
 const path = require('path')
 const dayjs = require('dayjs')
 const webpack = require('webpack')
-const TerserPlugin = require("terser-webpack-plugin")
+const TerserPlugin = require('terser-webpack-plugin')
 
 const dependencies = require('../package.json').dependencies
 const rules = require('./webpack.rules')
@@ -32,7 +32,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.join(__dirname, '../tmp', 'manifest.json'),
+      path: path.join(__dirname, '../data', 'manifest.json'),
       name: '[name]'
     }),
   ]

@@ -81,7 +81,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /(node_modules|theme|xbee|xpanda)/,
+        exclude: /(node_modules|theme|xbee|xpanda|antd)/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -113,7 +113,7 @@ module.exports = {
         ],
       },
       {
-        test: /(theme|xbee|xpanda)\.less$/,
+        test: /(theme|xbee|xpanda|antd)\.less$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -153,6 +153,9 @@ module.exports = {
       patterns: [
         {
           from: path.join(__dirname, '../data'),
+          globOptions: {
+            ignore: ['**/manifest.json'],
+          },
         },
       ],
     }),

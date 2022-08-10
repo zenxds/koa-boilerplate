@@ -59,7 +59,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        exclude: /(node_modules|theme|xbee|xpanda)/,
+        exclude: /(node_modules|theme|xbee|xpanda|antd)/,
         use: [
           'style-loader',
           {
@@ -91,7 +91,7 @@ module.exports = {
         ]
       },
       {
-        test: /(theme|xbee|xpanda)\.less$/,
+        test: /(theme|xbee|xpanda|antd)\.less$/,
         use: [
           'style-loader',
           'css-loader',
