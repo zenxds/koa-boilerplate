@@ -73,6 +73,5 @@ tmp
 # tsconfig.json
 
 template/index.dev.html
-data/manifest.json
 build/
 *.zip

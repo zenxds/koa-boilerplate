@@ -13,7 +13,7 @@ module.exports = {
     vendor: Object.keys(dependencies)
   },
   output: {
-    path: path.join(__dirname, '../build'),
+    path: path.join(__dirname, '../data'),
     filename: '[name].js',
     library: '[name]'
   },
