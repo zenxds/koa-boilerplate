@@ -6,7 +6,6 @@ const CSRF = require('koa-csrf')
 const koaStatic = require('koa-static')
 const xmlParser = require('koa-xml-body')
 const json = require('koa-json')
-const compress = require('koa-compress')
 const uuid = require('uuid').v4
 
 const app = require('./app')
@@ -14,7 +13,6 @@ const router = require('./router')
 const uploadDest = path.join(__dirname, 'public')
 
 app.use(require('./middleware/logger')(app))
-app.use(compress())
 app.use(require('./middleware/minify')())
 app.use(
   xmlParser({
