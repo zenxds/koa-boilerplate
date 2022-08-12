@@ -2,9 +2,9 @@ const path = require('path')
 const fse = require('fs-extra')
 const config = require('config')
 const session = require('koa-session')
-const CSRF = require('koa-csrf')
+// const CSRF = require('koa-csrf')
 const koaStatic = require('koa-static')
-const xmlParser = require('koa-xml-body')
+// const xmlParser = require('koa-xml-body')
 const json = require('koa-json')
 const uuid = require('uuid').v4
 
@@ -14,14 +14,14 @@ const uploadDest = path.join(__dirname, 'public')
 
 app.use(require('./middleware/logger')(app))
 app.use(require('./middleware/minify')())
-app.use(
-  xmlParser({
-    key: 'xmlBody',
-    xmlOptions: {
-      explicitArray: false,
-    },
-  }),
-)
+// app.use(
+//   xmlParser({
+//     key: 'xmlBody',
+//     xmlOptions: {
+//       explicitArray: false,
+//     },
+//   }),
+// )
 // 放在csrf之前
 app.use(
   require('koa-body')({
@@ -50,7 +50,7 @@ app.use(
     app,
   ),
 )
-app.use(new CSRF())
+// app.use(new CSRF())
 app.use(require('./middleware/cors'))
 app.use(
   koaStatic(uploadDest, {
