@@ -36,5 +36,6 @@ module.exports = (sequelize) => {
     },
   )
 
+  AuthToken.admin = {}
   return AuthToken
 }

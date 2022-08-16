@@ -6951,6 +6951,11 @@ koa-send@^5.0.0:
     http-errors "^1.7.3"
     resolve-path "^1.4.0"
 
+koa-sequelize-admin@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.npmjs.org/koa-sequelize-admin/-/koa-sequelize-admin-0.3.11.tgz#1f7a608b6cf4b41de3ef2d8025298b41282425d5"
+  integrity sha512-Pdqto/2D0XILQthRbmyHcapF/3B+BH+Nu9rgd8+KumIgf2+dqyKHxinwZQl3/JG/2t4Npzj3hHkVQocIxa2T/A==
+
 koa-session@^6.2.0:
   version "6.2.0"
   resolved "https://registry.npmjs.org/koa-session/-/koa-session-6.2.0.tgz#c0da2a808b520f62a25dac9f2914b580b2402078"

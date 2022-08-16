@@ -11,6 +11,8 @@ RUN yarn install --production --registry=https://registry.dingxiang-inc.com \
 
 COPY . $APP_DIR
 
+RUN cp -r node_modules/koa-sequelize-admin/dist app/public/admin
+
 EXPOSE 7002
 
 # Entrypoint

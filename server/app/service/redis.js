@@ -1,8 +1,19 @@
 const config = require('config')
 const Redis = require('ioredis')
 
-function factory() {
-  return new Redis(config.get('redis'))
+const redisConfig = config.get('redis')
+
+function factory(options = {}) {
+  return new Redis(
+    Object.assign(
+      {
+        host: redisConfig.host,
+        port: redisConfig.port,
+        db: redisConfig.db,
+      },
+      options,
+    ),
+  )
 }
 
 module.exports = {

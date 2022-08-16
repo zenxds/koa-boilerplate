@@ -1,6 +1,7 @@
 const { each, camelCase } = require('../util')
 const walk = require('../util/walk')
 const sequelize = require('../service/sequelize')
+const adminService = require('../service/admin')
 
 const models = {}
 const files = walk(__dirname)
@@ -14,6 +15,13 @@ each(models, model => {
     model.associate(models)
   }
 })
+
+each(models, model => {
+  if (model.admin) {
+    adminService.register(model, model.admin)
+  }
+})
+adminService.setup()
 
 const { User, AuthToken } = models
 User.addHook('afterCreate', 'generateAuthToken', (user) => {

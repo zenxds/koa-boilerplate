@@ -21,5 +21,6 @@ class RedisStore {
 }
 
 module.exports = new RedisStore({
-  client: require('./redis').factory(),
+  // session单独存储
+  client: require('./redis').factory({ db: 1 }),
 })

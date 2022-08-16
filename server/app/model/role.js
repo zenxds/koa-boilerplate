@@ -29,5 +29,6 @@ module.exports = (sequelize) => {
     },
   )
 
+  Role.admin = {}
   return Role
 }

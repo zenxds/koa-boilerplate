@@ -91,5 +91,7 @@ module.exports = (sequelize) => {
     },
   )
 
+  User.admin = {}
+
   return User
 }

@@ -7,6 +7,7 @@
     "start": "NODE_ENV=dev nodemon index.js",
     "prettier": "prettier --write 'app/**/*.js'",
     "test": "jest .",
+    "admin": "cp -r ../node_modules/koa-sequelize-admin/dist app/public/admin",
     "start:docker": "pm2-runtime ecosystem.config.js --env production",
     "deploy:docker": "node script/updateVersion.js && docker-compose up -d --build"
   },
@@ -24,6 +25,7 @@
     "koa-csrf": "^3.0.6",
     "koa-is-json": "^1.0.0",
     "koa-json": "^2.0.2",
+    "koa-sequelize-admin": "^0.3.11",
     "koa-session": "^6.2.0",
     "koa-static": "^5.0.0",
     "koa-views": "^8.0.0",

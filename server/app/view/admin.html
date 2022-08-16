@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>后台管理</title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://www.dingxiang-inc.com/favicon.ico">
+  <link href="/admin/main.css?v={{ staticVersion }}" rel="stylesheet">
+  <script>
+    {% if user %}
+    window.user = {{ user | dump | safe }}
+    {% endif %}
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/admin/vendor.js"></script>
+  <script src="/admin/main.js?v={{ staticVersion }}"></script>
+</body>
+</html>

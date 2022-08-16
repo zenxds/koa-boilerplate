@@ -18,14 +18,14 @@ exports.listView = options => {
   const { model, modelOptions = {}, template = '', locals = {} } = options
 
   return async ctx => {
-    const p = parseInt(ctx.query.p || 1)
-    const n = parseInt(ctx.query.n || 10)
+    const page = parseInt(ctx.query.page || 1)
+    const pageSize = parseInt(ctx.query.pageSize || 10)
 
     const list = await model.findAndCountAll(
       Object.assign(
         {
-          offset: (p - 1) * n,
-          limit: n,
+          offset: (page - 1) * pageSize,
+          limit: pageSize,
         },
         modelOptions,
       ),
