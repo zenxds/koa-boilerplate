@@ -3,17 +3,23 @@
  * Object.assign(locals, options, ctx.state || {})
  */
 const config = require('config')
+const redisClient = require('../service/redis').client
+
+let staticVersion = ''
 
 module.exports = async function (ctx, next) {
+  if (!staticVersion) {
+    staticVersion = await redisClient.get('staticVersion')
+  }
+
   ctx.state = {
     request: ctx.request,
     response: ctx.response,
     csrf: ctx.csrf,
     user: ctx.session.user,
     isProduction: ctx.isProduction,
-
-    staticVersion: config.staticVersion || '0.1.0',
     staticServer: config.staticServer,
+    staticVersion,
     isMobile: /iPhone|iPad|iPod|Android/i.test(ctx.get('user-agent')),
   }
 

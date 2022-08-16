@@ -1,13 +1,17 @@
-const fs = require('fs')
-const path = require('path')
+const config = require('config')
+const Redis = require('ioredis')
 
-const configFile = path.join(__dirname, '../config/production.js')
+;(async function() {
+  const redis = new Redis(config.get('redis'))
 
-if (fs.existsSync(configFile)) {
-  const config = require(configFile)
-  const version = config.staticVersion.split('.')
+  let val = await redis.get('staticVersion')
+  if (!val) {
+    val = '0.1.0'
+  }
+
+  const version = val.split('.')
   version[version.length - 1]++
 
-  config.staticVersion = version.join('.')
-  fs.writeFileSync(configFile, 'module.exports = ' + JSON.stringify(config, null, 2))
-}
+  await redis.set('staticVersion', version.join('.'))
+  process.exit(0)
+})()
