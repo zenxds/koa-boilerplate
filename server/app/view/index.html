@@ -2,7 +2,7 @@
 
 {% block styles %}
 {% if isProduction %}
-<link rel="stylesheet" href="{{ staticServer }}/main.css?v={{ staticVersion }}">
+<link rel="stylesheet" href="{{ staticServer }}/build/main.css?v={{ staticVersion }}">
 {% endif %}
 {% endblock %}
 
@@ -13,7 +13,9 @@
 
 {% block scripts %}
 {% if isProduction %}
-<script src="{{ staticServer }}/vendor.js?v={{ staticVersion }}"></script>
-{% endif %}
+<script src="{{ staticServer }}/build/vendor.js?v={{ staticVersion }}"></script>
+<script src="{{ staticServer }}/build/main.js?v={{ staticVersion }}"></script>
+{% else %}
 <script src="{{ staticServer }}/main.js?v={{ staticVersion }}"></script>
+{% endif %}
 {% endblock %}

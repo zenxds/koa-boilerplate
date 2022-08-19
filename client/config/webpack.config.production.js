@@ -16,11 +16,11 @@ module.exports = {
   target: 'web',
   entry: './src/index.js',
   output: {
-    path: path.join(__dirname, '../build'),
+    path: path.join(__dirname, '../../server/app/public/build'),
     filename: 'main.js',
     chunkFilename: '[name].[hash].js',
     clean: {
-      keep: /vendor/,
+      // keep: /vendor/,
     },
   },
   optimization: {

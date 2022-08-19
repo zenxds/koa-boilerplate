@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { Component, Fragment } from 'react'
+import { withRouter, Link } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 import { Menu } from '@dx/xbee'
 import classnames from 'classnames'
@@ -137,17 +137,22 @@ class PageMenu extends Component {
     }
 
     return (
-      <Menu
-        mode="inline"
-        theme="dark"
-        selectedKeys={[defaultOpenKeys[0]]}
-        openKeys={openKeys}
-        defaultOpenKeys={defaultOpenKeys}
-        onClick={this.handleClick}
-        onOpenChange={this.handleOpenChange}
-      >
-        {this.renderMenu(menus)}
-      </Menu>
+      <Fragment>
+        <Link to="/" styleName="logo">
+          <img src={`${__webpack_public_path__}images/logo.png`} />
+        </Link>
+        <Menu
+          mode="inline"
+          theme="dark"
+          selectedKeys={[defaultOpenKeys[0]]}
+          openKeys={openKeys}
+          defaultOpenKeys={defaultOpenKeys}
+          onClick={this.handleClick}
+          onOpenChange={this.handleOpenChange}
+        >
+          {this.renderMenu(menus)}
+        </Menu>
+      </Fragment>
     )
   }
 }
