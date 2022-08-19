@@ -130,7 +130,6 @@ export default class PageTable extends Base {
         <Table
           loading={loading}
           columns={this.getColumns()}
-          size="small"
           rowKey={record => record.id}
           dataSource={this.getDataSource()}
           pagination={this.getPagination()}

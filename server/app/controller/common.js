@@ -1,57 +1,9 @@
-const { camelCase } = require('../util')
-const models = require('../model')
-
-function getModel(name = '') {
-  return models[camelCase(name, true)]
-}
-
-// 分离attributes和associations参数
-function separate(Model, data) {
-  const attributes = {}
-  const associations = {}
-  const rawAttributes = Model.rawAttributes
-
-  Object.keys(data).forEach(key => {
-    if (rawAttributes[key]) {
-      attributes[key] = data[key]
-    } else if (Model.associations[key]) {
-      associations[key] = {
-        association: Model.associations[key],
-        value: data[key]
-      }
-    } else if (Model.associations[camelCase(key, true)]) {
-      associations[camelCase(key, true)] = {
-        association: Model.associations[camelCase(key, true)],
-        value: data[key]
-      }
-    }
-  })
-
-  return {
-    attributes,
-    associations
-  }
-}
-
-async function setAssociations(instance, associations) {
-  for (let i in associations) {
-    const { value, association} = associations[i]
-
-    if (/^(BelongsTo|HasOne)$/.test(association.associationType)) {
-      const target = await association.target.findByPk(value)
-      await instance[association.accessors.set](target)
-    }
-
-    if (/^(HasMany|BelongsToMany)$/.test(association.associationType)) {
-      const targets = await association.target.findAll({
-        where: {
-          [association.target.primaryKeyAttribute]: Array.isArray(value) ? value : value.split(',')
-        }
-      })
-      await instance[association.accessors.set](targets)
-    }
-  }
-}
+const {
+  separate,
+  getModel,
+  getListQuery,
+  setAssociations,
+} = require('../service/common')
 
 exports.create = async ctx => {
   const Model = getModel(ctx.params.model)
@@ -63,10 +15,17 @@ exports.create = async ctx => {
   const { body } = ctx.request
   const { attributes, associations } = separate(Model, body)
 
-  const instance = await Model.create(attributes)
-  await setAssociations(instance, associations)
-
-  ctx.body = instance
+  const t = await Model.sequelize.transaction()
+  try {
+    const instance = await Model.create(attributes, {
+      transaction: t,
+    })
+    await setAssociations(instance, associations, { transaction: t })
+    await t.commit()
+    ctx.body = instance
+  } catch (err) {
+    await t.rollback()
+  }
 }
 
 exports.update = async ctx => {
@@ -86,8 +45,18 @@ exports.update = async ctx => {
   const { attributes, associations } = separate(Model, body)
   delete attributes.id
 
-  await instance.update(attributes)
-  await setAssociations(instance, associations)
+  const t = await Model.sequelize.transaction()
+  try {
+    await instance.update(attributes, {
+      transaction: t,
+    })
+    await setAssociations(instance, associations, {
+      transaction: t,
+    })
+    await t.commit()
+  } catch (err) {
+    await t.rollback()
+  }
 
   ctx.body = instance
 }
@@ -119,10 +88,13 @@ exports.list = async ctx => {
     return ctx.throw(400)
   }
 
+  const { include, where, order } = getListQuery(Model, ctx.query)
   ctx.body = await Model.findAndCountAll({
     offset: (page - 1) * pageSize,
     limit: pageSize,
-    include: { all: true }
+    include,
+    where,
+    order,
   })
 }
 
@@ -133,8 +105,11 @@ exports.listAll = async ctx => {
     return ctx.throw(400)
   }
 
+  const { include, where, order } = getListQuery(Model, ctx.query)
   ctx.body = await Model.findAll({
-    include: { all: true }
+    include,
+    where,
+    order,
   })
 }
 
