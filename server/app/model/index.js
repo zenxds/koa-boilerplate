@@ -31,6 +31,13 @@ User.addHook('afterCreate', 'generateAuthToken', (user) => {
   })
 })
 
-sequelize.sync()
+const { isProduction } = require('../app')
+if (isProduction) {
+  sequelize.sync()
+} else {
+  sequelize.sync({
+    alter: true
+  })
+}
 
 module.exports = models

@@ -1,3 +1,5 @@
+const cache = require('../service/cache')
+
 const toString = Object.prototype.toString
 const isType = (type) => {
   return function(obj) {
@@ -7,7 +9,7 @@ const isType = (type) => {
 const isFunction = isType('Function')
 const isRegExp = isType('RegExp')
 
-const each = (object, fn) => {
+exports.each = (object, fn) => {
   let length = object.length
 
   if (length === +length) {
@@ -25,7 +27,7 @@ const each = (object, fn) => {
   }
 }
 
-const camelCase = (str, isBig) => {
+exports.camelCase = (str, isBig) => {
   const ret = str
     .replace(/([a-z\d])([A-Z])/g, '$1-$2')
     .toLowerCase()
@@ -39,7 +41,7 @@ const camelCase = (str, isBig) => {
   )
 }
 
-const isIgnore = (ignore, ctx) => {
+exports.isIgnore = (ignore, ctx) => {
   if (isRegExp(ignore)) {
     return ignore.test(ctx.path)
   }
@@ -51,8 +53,15 @@ const isIgnore = (ignore, ctx) => {
   return !!ignore
 }
 
-module.exports = {
-  each,
-  camelCase,
-  isIgnore
+exports.cacheDecorator = (key, fn) => {
+  return async () => {
+    let data = cache.get(key)
+    if (data) {
+      return data
+    }
+
+    data = await fn()
+    cache.set(key, data)
+    return data
+  }
 }
