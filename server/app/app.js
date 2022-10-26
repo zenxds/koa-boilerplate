@@ -4,13 +4,13 @@ const Koa = require('koa')
 const getLogger = require('./util/logger')
 const appLogger = getLogger('app')
 const errorLogger = getLogger('error')
-const app = new Koa({
-  keys: config.get('keys'),
-})
+const app = new Koa()
 const isProduction = /production/.test(app.env)
 const isMaster = isProduction ? process.env.INSTANCE_ID === '0' : true
 
 Object.assign(app, {
+  keys: config.get('keys'),
+  proxy: isProduction,
   isProduction,
   isMaster
 })
