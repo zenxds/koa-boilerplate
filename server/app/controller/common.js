@@ -95,6 +95,7 @@ exports.list = async ctx => {
   ctx.body = await Model.findAndCountAll({
     offset: (page - 1) * pageSize,
     limit: pageSize,
+    distinct: true,
     include,
     where,
     order,
