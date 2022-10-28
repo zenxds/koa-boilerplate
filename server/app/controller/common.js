@@ -22,9 +22,11 @@ exports.create = async ctx => {
     })
     await setAssociations(instance, associations, { transaction: t })
     await t.commit()
+
     ctx.body = instance
   } catch (err) {
     await t.rollback()
+    throw err
   }
 }
 
@@ -54,11 +56,12 @@ exports.update = async ctx => {
       transaction: t,
     })
     await t.commit()
+
+    ctx.body = instance
   } catch (err) {
     await t.rollback()
+    throw err
   }
-
-  ctx.body = instance
 }
 
 exports.del = async ctx => {
