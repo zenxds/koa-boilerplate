@@ -1,3 +1,5 @@
+const path = require('path')
+const mime = require('mime')
 const cache = require('../service/cache')
 
 const toString = Object.prototype.toString
@@ -64,4 +66,11 @@ exports.cacheDecorator = (key, fn) => {
     cache.set(key, data)
     return data
   }
+}
+
+// file.mimetype不可信，会被绕过
+exports.getUploadMimeType = (file) => {
+  const ext = path.extname(file.originalFilename)
+
+  return ext ? mime.getType(ext) : file.mimetype
 }

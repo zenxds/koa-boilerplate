@@ -1,3 +1,4 @@
+const os = require('os')
 const path = require('path')
 const fse = require('fs-extra')
 const config = require('config')
@@ -10,7 +11,9 @@ const uuid = require('uuid').v4
 
 const app = require('./app')
 const router = require('./router')
-const uploadDest = path.join(__dirname, 'public')
+
+const publicDir = path.join(__dirname, 'public')
+const uploadDir = os.tmpdir()
 
 app.use(require('./middleware/logger')(app))
 app.use(require('./middleware/minify')())
@@ -29,15 +32,35 @@ app.use(
     formLimit: '10mb',
     multipart: true,
     formidable: {
-      uploadDir: uploadDest,
+      uploadDir,
       keepExtensions: true,
       // 1G
       maxFileSize: 1024 * 1024 * 1024,
       filename: (name, ext) => {
         const dir = uuid().split('-')[0]
 
-        fse.ensureDirSync(path.join(uploadDest, dir))
+        fse.ensureDirSync(path.join(uploadDir, dir))
         return path.join(dir, name + ext)
+      },
+      filter: function ({ name, originalFilename, mimetype }) {
+        const ext = path.extname(originalFilename)
+
+        // svg有安全问题
+        if (ext === '.svg') {
+          return false
+        }
+
+        if (mimetype) {
+          if (/^(image|video|text)/.test(mimetype)) {
+            return true
+          }
+        }
+
+        if (ext === '.pdf') {
+          return true
+        }
+
+        return false
       }
     }
   })
@@ -53,7 +76,7 @@ app.use(
 // app.use(new CSRF())
 app.use(require('./middleware/cors'))
 app.use(
-  koaStatic(uploadDest, {
+  koaStatic(publicDir, {
     hidden: true,
     maxage: app.isProduction ? 1000 * 3600 * 24 : 0,
   }),
