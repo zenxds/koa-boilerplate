@@ -6,3 +6,18 @@ exports.index = async ctx => {
     title: '首页',
   })
 }
+
+exports.getUserInfo = async ctx => {
+  if (ctx.session.user) {
+    ctx.body = {
+      success: true,
+      data: ctx.session.user
+    }
+  } else {
+    ctx.body = {
+      success: false,
+      message: 'No User Info',
+      data: null
+    }
+  }
+}

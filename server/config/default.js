@@ -27,10 +27,12 @@ module.exports = {
 
   ignoreOrigin: false,
 
-  adminUser: {
-    username: '',
-    password: ''
-  },
+  adminUsers: [
+    {
+      username: '',
+      password: ''
+    },
+  ],
 
   openRegister: false,
 

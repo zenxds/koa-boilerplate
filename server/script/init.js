@@ -1,7 +1,7 @@
 const config = require('config')
 const { User, Role } = require('../app/model')
 
-const adminUser = config.get('adminUser')
+const adminUsers = config.get('adminUsers')
 const initRoles = ['user', 'admin']
 const roleMap = {}
 
@@ -16,14 +16,15 @@ async function init() {
     roleMap[initRoles[i]] = role
   }
 
-  if (adminUser.username) {
+  for (let i = 0; i < adminUsers.length; i++) {
+    const { username, password } = adminUsers[i]
     const [user, created] = await User.findOrCreate({
       where: {
-        username: adminUser.username,
+        username,
       },
       defaults: {
         isSuperAdmin: true,
-        password: adminUser.password,
+        password,
       },
     })
   }

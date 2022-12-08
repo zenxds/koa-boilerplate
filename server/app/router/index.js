@@ -6,6 +6,8 @@ const adminService = require('../service/admin')
 const uploadRouter = require('./upload')
 
 router.get('/', controllers.home.index)
+router.get('/api/getUserInfo', controllers.home.getUserInfo)
+
 router.use('/upload', uploadRouter.routes())
 
 router.use('/user', require('./auth').routes())
