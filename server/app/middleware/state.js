@@ -17,6 +17,7 @@ module.exports = async function (ctx, next) {
     response: ctx.response,
     csrf: ctx.csrf,
     user: ctx.session.user,
+    ip: ctx.get('X-Real-IP'),
     isProduction: ctx.isProduction,
     staticServer: config.staticServer,
     staticVersion,

@@ -4,6 +4,8 @@ ENV APP_DIR /home/node
 
 WORKDIR $APP_DIR
 
+USER node
+
 COPY yarn.lock package.json $APP_DIR/
 
 RUN yarn install --production --registry=https://registry.dingxiang-inc.com \
