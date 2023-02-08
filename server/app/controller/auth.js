@@ -41,6 +41,10 @@ exports.login = async ctx => {
     throw new Error(`${errorCodeMap.userNotExist}: 用户不存在`)
   }
 
+  if (!user.isActive) {
+    throw new Error(`${errorCodeMap.userDisabled}: 该用户已被禁用`)
+  }
+
   if (!user.validPassword(password)) {
     throw new Error(`${errorCodeMap.passwordIncorrect}: 密码不正确`)
   }
