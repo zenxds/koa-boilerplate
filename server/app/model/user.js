@@ -1,8 +1,22 @@
+const crypto = require('crypto')
 const { Model, DataTypes } = require('sequelize')
-const bcrypt = require('bcrypt')
+
+const sha1 = str => {
+  const hash = crypto.createHash('sha1')
+  hash.update(str)
+  return hash.digest('hex')
+}
 
 module.exports = (sequelize) => {
   class User extends Model {
+    static generateSalt() {
+      return crypto.randomBytes(16).toString('hex')
+    }
+
+    static hashPassword(password, salt) {
+      return sha1(password + salt)
+    }
+
     static associate({ AuthToken, Role }) {
       User.hasMany(AuthToken, {
         as: 'tokens',
@@ -14,13 +28,8 @@ module.exports = (sequelize) => {
       })
     }
 
-    generateHash(password) {
-      const salt = bcrypt.genSaltSync()
-      return bcrypt.hashSync(password, salt)
-    }
-
     validPassword(password) {
-      return bcrypt.compareSync(password, this.password)
+      return User.hashPassword(password, this.salt) === this.password
     }
 
     async hasRole(name) {
@@ -59,6 +68,9 @@ module.exports = (sequelize) => {
           // is: /^[\w-]{4,20}$/
         }
       },
+      salt: {
+        type: DataTypes.STRING,
+      },
       email: {
         type: DataTypes.STRING,
         unique: true,
@@ -83,7 +95,14 @@ module.exports = (sequelize) => {
       setterMethods: {
         password(value) {
           if (/^[\w-]{4,20}$/.test(value)) {
-            this.setDataValue('password', this.generateHash(value))
+            let salt = this.getDataValue('salt')
+
+            if (!salt) {
+              salt = User.generateSalt()
+              this.setDataValue('salt', salt)
+            }
+
+            this.setDataValue('password', User.hashPassword(value, salt))
           } else {
             throw new Error('incorrect password format')
           }

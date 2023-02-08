@@ -14,7 +14,6 @@
   "dependencies": {
     "@koa/cors": "^3.3.0",
     "@koa/router": "^10.1.1",
-    "bcrypt": "^5.0.1",
     "config": "^3.3.7",
     "dayjs": "^1.11.1",
     "fs-extra": "^10.1.0",
