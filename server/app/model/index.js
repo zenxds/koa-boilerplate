@@ -33,7 +33,9 @@ User.addHook('afterCreate', 'generateAuthToken', (user) => {
 
 const { isProduction } = require('../app')
 if (isProduction) {
-  sequelize.sync()
+  sequelize.sync().catch(err => {
+    console.log(err)
+  })
 } else {
   sequelize.sync({
     alter: true
