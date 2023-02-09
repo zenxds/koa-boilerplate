@@ -38,7 +38,7 @@ if (isProduction) {
   })
 } else {
   sequelize.sync({
-    alter: true
+    // alter: true
   })
 }
 

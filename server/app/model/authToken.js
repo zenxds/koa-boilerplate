@@ -4,10 +4,7 @@ const crypto = require('crypto')
 module.exports = (sequelize) => {
   class AuthToken extends Model {
     static associate({ User }) {
-      AuthToken.belongsTo(User, {
-        foreignKey: 'userId',
-        as: 'user'
-      })
+      AuthToken.belongsTo(User)
     }
 
     static generate() {
@@ -34,8 +31,7 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: 'AuthToken',
-      tableName: 'auth_token',
+      modelName: 'authToken',
     },
   )
 

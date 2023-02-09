@@ -18,10 +18,7 @@ module.exports = (sequelize) => {
     }
 
     static associate({ AuthToken, Role }) {
-      User.hasMany(AuthToken, {
-        as: 'tokens',
-        foreignKey: 'userId',
-      })
+      User.hasMany(AuthToken)
 
       User.belongsToMany(Role, {
         through: 'user_role'
@@ -90,8 +87,7 @@ module.exports = (sequelize) => {
     },
     {
       sequelize,
-      modelName: 'User',
-      tableName: 'user',
+      modelName: 'user',
       setterMethods: {
         password(value) {
           if (/^[\w-]{4,20}$/.test(value)) {
