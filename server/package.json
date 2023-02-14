@@ -24,7 +24,7 @@
     "koa-csrf": "^3.0.6",
     "koa-is-json": "^1.0.0",
     "koa-json": "^2.0.2",
-    "koa-sequelize-admin": "^0.3.11",
+    "koa-sequelize-admin": "^0.3.17",
     "koa-session": "^6.2.0",
     "koa-static": "^5.0.0",
     "koa-views": "^8.0.0",

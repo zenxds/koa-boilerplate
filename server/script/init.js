@@ -30,4 +30,6 @@ async function init() {
   }
 }
 
-init()
+init().catch(err => {
+  console.log(err)
+})

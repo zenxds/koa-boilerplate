@@ -3,7 +3,7 @@ const dbConfig = require('config').get('db')
 
 const sequelize = new Sequelize(Object.assign({
   define: {
-    underscored: true
+    // underscored: true
     // freezeTableName: true
   }
 }, dbConfig))

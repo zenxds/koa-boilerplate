@@ -67,6 +67,7 @@ module.exports = (sequelize) => {
       },
       salt: {
         type: DataTypes.STRING,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
