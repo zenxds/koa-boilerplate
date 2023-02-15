@@ -43,6 +43,7 @@ const getInclude = exports.getInclude = function(Model) {
     include.push({
       model: association.target,
       as: association.as,
+      required: false,
     })
   }
 
