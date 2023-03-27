@@ -1,6 +1,6 @@
 const path = require('path')
 const mime = require('mime')
-const cache = require('../service/cache')
+const cache = require('@service/cache')
 
 const toString = Object.prototype.toString
 const isType = (type) => {

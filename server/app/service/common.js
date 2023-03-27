@@ -1,6 +1,6 @@
 const { Op } = require('sequelize')
-const { camelCase } = require('../util')
-const models = require('../model')
+const { camelCase } = require('@util')
+const models = require('@model')
 
 exports.getModel = function(name = '') {
   return models[camelCase(name, true)]

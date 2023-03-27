@@ -1,6 +1,6 @@
 const Router = require('@koa/router')
 const router = new Router()
-const logger = require('../util/logger')('error')
+const logger = require('@util/logger')('error')
 
 const Admin = require('koa-sequelize-admin')
 

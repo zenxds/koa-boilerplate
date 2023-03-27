@@ -1,5 +1,5 @@
 const EventEmitter = require('events')
-const { isProduction } = require('../app')
+const { isProduction } = require('@app')
 
 /*
  * on/once/emit

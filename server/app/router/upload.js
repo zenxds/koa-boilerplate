@@ -3,7 +3,7 @@ const path = require('path')
 const Router = require('@koa/router')
 const router = new Router()
 
-const { getUploadMimeType } = require('../util')
+const { getUploadMimeType } = require('@util')
 const publicDir = path.join(__dirname, '../public')
 
 router.post('/', async(ctx) => {

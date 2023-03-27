@@ -1,5 +1,5 @@
-const services = require('../service')
-const models = require('../model')
+const services = require('@service')
+const models = require('@model')
 
 exports.index = async ctx => {
   await ctx.render('index', {

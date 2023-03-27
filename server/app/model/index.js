@@ -1,7 +1,7 @@
-const { each, camelCase } = require('../util')
-const walk = require('../util/walk')
-const sequelize = require('../service/sequelize')
-const adminService = require('../service/admin')
+const { each, camelCase } = require('@util')
+const walk = require('@util/walk')
+const sequelize = require('@service/sequelize')
+const adminService = require('@service/admin')
 
 const models = {}
 const files = walk(__dirname)
@@ -31,7 +31,7 @@ User.addHook('afterCreate', 'generateAuthToken', (user) => {
   })
 })
 
-const { isProduction } = require('../app')
+const { isProduction } = require('@app')
 if (isProduction) {
   sequelize.sync().catch(err => {
     console.log(err)

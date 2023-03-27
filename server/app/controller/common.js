@@ -3,7 +3,7 @@ const {
   getModel,
   getListQuery,
   setAssociations,
-} = require('../service/common')
+} = require('@service/common')
 
 exports.create = async ctx => {
   const Model = getModel(ctx.params.model)

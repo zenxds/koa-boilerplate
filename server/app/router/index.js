@@ -1,8 +1,8 @@
 const Router = require('@koa/router')
 const router = new Router()
 
-const controllers = require('../controller')
-const adminService = require('../service/admin')
+const controllers = require('@controller')
+const adminService = require('@service/admin')
 const uploadRouter = require('./upload')
 
 router.get('/', controllers.home.index)

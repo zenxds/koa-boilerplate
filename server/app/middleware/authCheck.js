@@ -1,4 +1,4 @@
-const { isIgnore } = require('../util')
+const { isIgnore } = require('@util')
 
 module.exports = (options = {}) => {
   options = Object.assign(

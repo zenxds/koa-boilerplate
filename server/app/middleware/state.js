@@ -3,7 +3,7 @@
  * Object.assign(locals, options, ctx.state || {})
  */
 const config = require('config')
-const redisClient = require('../service/redis').client
+const redisClient = require('@service/redis').client
 
 let staticVersion = ''
 

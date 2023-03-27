@@ -1,6 +1,6 @@
 const Router = require('@koa/router')
 const router = new Router()
-const controller = require('../controller/common')
+const controller = require('@controller/common')
 
 router.post('/create', controller.create)
 router.post('/update', controller.update)

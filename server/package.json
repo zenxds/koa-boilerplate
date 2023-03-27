@@ -48,7 +48,10 @@
       "node_modules/",
       "config/",
       "test/__mocks__/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@(controller|middleware|model|service|constant|util|app)(.*)$": "<rootDir>/app/$1$2"
+    }
   },
   "devDependencies": {
     "eslint": "^8.14.0",

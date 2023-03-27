@@ -1,7 +1,7 @@
 const config = require('config')
 
-const models = require('../model')
-const { errorCodeMap } = require('../constant')
+const models = require('@model')
+const { errorCodeMap } = require('@constant')
 
 const { User } = models
 

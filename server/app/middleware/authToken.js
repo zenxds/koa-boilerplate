@@ -1,4 +1,4 @@
-const models = require('../model')
+const models = require('@model')
 
 module.exports = async (ctx, next) => {
   if (!ctx.session) {
